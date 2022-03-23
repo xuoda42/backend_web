@@ -1,0 +1,43 @@
+body {
+    color: indigo;
+    background-color: lightgray;
+}
+
+.form {
+    text-align: left;
+    width: 600px;
+    height: auto;
+    margin: 50px auto;
+    padding: 20px 20px 9px;
+    position: relative;
+    background: lightpink;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.form label {
+    color: indigo;
+}
+
+.form input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.form input[type="submit"] {
+    background-color: antiquewhite;
+    border: 2px;
+    border-radius: 4px;
+    height: 30px;
+    width: 150px;
+    text-align: center;
+}
+
+.border {
+    width: auto;
+}
+
+html {
+    height: 100%;
+    background-size: cover;
+}
