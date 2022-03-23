@@ -34,7 +34,7 @@ if (empty($_POST['biography'])) {
   $errors = TRUE;
 }
 if (empty($_POST['checkbox'])) {
-  print('Подтверите согласие.<br/>');
+  print('Подтвердите согласие.<br/>');
   $errors = TRUE;
 }
 
