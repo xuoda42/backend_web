@@ -118,7 +118,7 @@
 
             <p id="subm">Даю согласие на обратоку данных.</p>
           <label><input type="checkbox" checked="checked"
-            name="check-1" <?php if ($errors['check-1']) {print 'class="error"';} ?>/>Подтверждаю</label><br />
+            name="check-1" <?php if ($errors['check-1']) {print 'class="error"';} ?>/>Подтверждаю/</label><br />
 
             <input type="submit" value="Отправить" />
           </form>
