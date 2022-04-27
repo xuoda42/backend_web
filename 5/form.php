@@ -116,7 +116,7 @@
             <?php if ($errors['field-name-4']) {print 'class="error"';} ?>><?php print $values['field-name-4']; ?></textarea>
             </label><br />
 
-            <p id="subm">Даю согласие на обратоку данных</p>
+            <p id="subm">Даю согласие на обратоку данных.</p>
           <label><input type="checkbox" checked="checked"
             name="check-1" <?php if ($errors['check-1']) {print 'class="error"';} ?>/>Подтверждаю</label><br />
 
