@@ -1,0 +1,17 @@
+body
+{
+  background-color: #ff8b8b;
+}
+.form{
+  background-color: #45ee91;
+  margin: auto;
+  align-items: center;
+  width: 80%;
+  padding-top: 2%;
+}
+#forms {
+  align-self: center;
+}
+.content{
+  padding-left: 5%;
+}
