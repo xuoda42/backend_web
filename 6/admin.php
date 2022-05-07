@@ -60,7 +60,7 @@ while ($result = mysqli_fetch_array($sql)) { echo "<div class='container mb-1 mt
     echo "<p> Пароль: ";echo "<strong>"; echo  $result['pass']; echo "</strong>"; $number=$number+1; 
     $id=$result['id'];;
     $part="pple";
-    $link="http://u41029.kubsu-dev.ru/web6/del.php?id=$id";
+    $link="http://u41029.kubsu-dev.ru/backend_web/6/del.php?id=$id";
     $del=$result['id'];
     echo "<p> <a href=$link> <button> Удалить пользователя из базы данных </button> </a>";
     

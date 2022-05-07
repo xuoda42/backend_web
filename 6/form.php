@@ -56,7 +56,7 @@ else{
 // и задавая начальные значения элементов ранее сохраненными.
 ?>
 
-<div class='container mb-1 mt-1' id='for'><h5> Нажмите <a href='/web6/admin.php'>сюда</a> ,если вы являетесь админиистратором.</div>";
+<div class='container mb-1 mt-1' id='for'><h5> Нажмите <a href='/6/admin.php'>сюда</a> ,если вы являетесь админиистратором.</div>";
 
 <div class="container">
 <h1 id="for"> Контракт: </h1>
