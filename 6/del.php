@@ -2,9 +2,9 @@
 if(isset($_GET['id']))
 {   
     $host='localhost';
-    $user = 'u16350';
-    $password = '1871497';
-    $db_name = 'u16350'; 
+    $user = 'u41029';
+    $password = '3452334';
+    $db_name = 'u41029'; 
     $link = mysqli_connect($host, $user, $password, $db_name) 
             or die("Ошибка " . mysqli_error($link)); 
     $id = mysqli_real_escape_string($link, $_GET['id']);

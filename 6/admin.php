@@ -27,9 +27,9 @@ if (empty($_SERVER['PHP_AUTH_USER']) ||
 echo "<div class='container mb-1 mt-1' id='for'>Вы успешно авторизовались и видите защищенные паролем данные. </div>";
 echo "<div class='container mb-1 mt-1' id='for'> Нажмите <a href='./'>сюда</a> для выхода.</div>";
 $host='localhost';
-$user = 'u16350';
-$password = '1871497';
-$db_name = 'u16350';   // Имя базы данных
+$user = 'u41029';
+$password = '3452334';
+$db_name = 'u41029';   // Имя базы данных
 $link = mysqli_connect($host, $user, $password, $db_name);;
 
 $err=0;
@@ -60,7 +60,7 @@ while ($result = mysqli_fetch_array($sql)) { echo "<div class='container mb-1 mt
     echo "<p> Пароль: ";echo "<strong>"; echo  $result['pass']; echo "</strong>"; $number=$number+1; 
     $id=$result['id'];;
     $part="pple";
-    $link="http://u16350.kubsu-dev.ru/web6/del.php?id=$id";
+    $link="http://u41029.kubsu-dev.ru/web6/del.php?id=$id";
     $del=$result['id'];
     echo "<p> <a href=$link> <button> Удалить пользователя из базы данных </button> </a>";
     

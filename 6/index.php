@@ -130,9 +130,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
           
           
           $host='localhost';
-          $user = 'u16350';
-          $password = '1871497';
-          $db_name = 'u16350';   // Имя базы данных
+          $user = 'u41029';
+          $password = '3452334';
+          $db_name = 'u41029';   // Имя базы данных
           $link = mysqli_connect($host, $user, $password, $db_name);;
           
           $sql = mysqli_query($link, 'SELECT * FROM application');
@@ -301,10 +301,10 @@ if (!empty($_COOKIE[session_name()]) &&
         setcookie('bio_value', $_POST['bio'], time() + 30 * 24 * 60 * 60);
         setcookie('checkbox_value', $_POST['checkbox'], time() + 30 * 24 * 60 * 60);
         
-        $user = 'u16350';
-        $password = '1871497';
+        $user = 'u41029';
+        $password = '3452334';
         $log=$_SESSION['login'];
-        $db = new PDO('mysql:host=localhost;dbname=u16350', $user, $password, array(PDO::ATTR_PERSISTENT => true));
+        $db = new PDO('mysql:host=localhost;dbname=u41029', $user, $password, array(PDO::ATTR_PERSISTENT => true));
         
         try {
             $stmt = $db->prepare("UPDATE application SET name = ?, mail = ?, year = ?, abilities = ?, limps = ?, sex = ?, bio = ?, checked = ? WHERE login='$log'");
@@ -333,9 +333,9 @@ if (!empty($_COOKIE[session_name()]) &&
         setcookie('bio_value', $_POST['bio'], time() + 30 * 24 * 60 * 60);
         setcookie('checkbox_value', $_POST['checkbox'], time() + 30 * 24 * 60 * 60);
         $cashed=md5($pass);
-        $user = 'u16350';
-        $password = '1871497';
-        $db = new PDO('mysql:host=localhost;dbname=u16350', $user, $password, array(PDO::ATTR_PERSISTENT => true));
+        $user = 'u41029';
+        $password = '3452334';
+        $db = new PDO('mysql:host=localhost;dbname=u41029', $user, $password, array(PDO::ATTR_PERSISTENT => true));
         // Подготовленный запрос. Не именованные метки.
         try {
             $stmt = $db->prepare("INSERT INTO application SET name = ?, mail = ?, year = ?, abilities = ?, limps = ?, sex = ?, bio = ?, checked = ?, login = ?, pass = ?");

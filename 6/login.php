@@ -70,9 +70,9 @@ else {
 
   // TODO: Проверть есть ли такой логин и пароль в базе данных.
     $host='localhost';
-    $user = 'u16350';
-    $password = '1871497';
-    $db_name = 'u16350';   // Имя базы данных
+    $user = 'u41029';
+    $password = '3452334';
+    $db_name = 'u41029';   // Имя базы данных
     $link = mysqli_connect($host, $user, $password, $db_name);;
     
     $err=0;
