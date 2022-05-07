@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $db = new PDO('mysql:host=localhost;dbname=u41029', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
     $uid = $_SESSION['uid'];
     $result = $db->query("SELECT name, email, birth, gender, iq, comment FROM person WHERE id=$uid");
-    foreach ($result as $x)
+    foreach($result as $x)
     {
       //Санитизация
       $values['field-name-1'] = strip_tags($x['name']);

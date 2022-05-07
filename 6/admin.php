@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 
   print('Вы успешно авторизовались и видите защищенные паролем данные.');
 
-  $result = $db->query("SELECT * FROM person");  
+  $result = $db->query("SELECT * FROM person");
   $draw = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=1");
   $sing = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=2");
   $trouble = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=3");
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
             Удаление </br>
             <input name="id2" />
           </label>
-          <input type="submit" value="Подтвредить" />
+          <input type="submit" value="Подтвердить" />
     </form>
 
     <?php 
