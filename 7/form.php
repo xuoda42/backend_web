@@ -2,7 +2,7 @@
 <html lang="ru">
   <head>
     <meta charset="utf-8">
-    <title>Задание №7</title>
+    <title>Лабораторная № 6</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -117,9 +117,9 @@
             <?php if ($errors['field-name-4']) {print 'class="error"';} ?>><?php print $values['field-name-4']; ?></textarea>
             </label><br />
 
-            <p id="subm">Даю согласие на обратоку данных.</p>
+            <p id="subm">Даю согласие на обратоку данных</p>
           <label><input type="checkbox" checked="checked"
-            name="check-1" <?php if ($errors['check-1']) {print 'class="error"';} ?>/>Подтверждаю.</label><br />
+            name="check-1" <?php if ($errors['check-1']) {print 'class="error"';} ?>/>Подтверждаю</label><br />
 
             <input type="submit" value="Отправить" />
           </form>
