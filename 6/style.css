@@ -1,39 +1,17 @@
-body{
-    line-height: 2;
-    background-color:#AAF0D1;
-   }
-   
-   #form-top{
-       margin-top:30%;
-   }
-   
-   .row{
-       margin-top:2%;
-   }
-   
-   #for{
-       background-color:#F5F5F5;
-       padding: 20px; /* Поля вокруг текста */
-       border-radius: 5px; /* Уголки */
-   }
-   
-   #notify{
-       margin-top:20%;
-   }
-   
-   .error {
-     background-color:#FF5349;
-   }
-   
-   #error{
-       background-color:#FF5349;
-       padding: 20px; /* Поля вокруг текста */
-       border-radius: 5px; /* Уголки */
-   }
-   
-   #answer{
-       background-color:white;
-       padding: 20px; /* Поля вокруг текста */
-       border-radius: 5px; /* Уголки */
-       border-color:grey;
-   }
+body
+{
+  background-color: #ff8b8b;
+}
+.form{
+  background-color: #45ee91;
+  margin: auto;
+  align-items: center;
+  width: 80%;
+  padding-top: 2%;
+}
+#forms {
+  align-self: center;
+}
+.content{
+  padding-left: 5%;
+}

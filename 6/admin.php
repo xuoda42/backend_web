@@ -1,9 +1,3 @@
-<html><head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="style.css" >
-</head></html>
-
 <?php
 
 /**
@@ -14,58 +8,166 @@
 // Пример HTTP-аутентификации.
 // PHP хранит логин и пароль в суперглобальном массиве $_SERVER.
 // Подробнее см. стр. 26 и 99 в учебном пособии Веб-программирование и веб-сервисы.
-if (empty($_SERVER['PHP_AUTH_USER']) ||
-    empty($_SERVER['PHP_AUTH_PW']) ||
-    $_SERVER['PHP_AUTH_USER'] != 'admin' ||
-    md5($_SERVER['PHP_AUTH_PW']) != md5('123')) {
-  header('HTTP/1.1 401 Unanthorized');
-  header('WWW-Authenticate: Basic realm="My site"');
-  print('<h1>401 Требуется авторизация</h1>');
-  exit();
-}
-
-echo "<div class='container mb-1 mt-1' id='for'>Вы успешно авторизовались и видите защищенные паролем данные. </div>";
-echo "<div class='container mb-1 mt-1' id='for'> Нажмите <a href='./'>сюда</a> для выхода.</div>";
-$host='localhost';
 $user = 'u41029';
-$password = '3452334';
-$db_name = 'u41029';   // Имя базы данных
-$link = mysqli_connect($host, $user, $password, $db_name);;
+$pass = '3452334';
+$db = new PDO('mysql:host=localhost;dbname=u41029', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
-$err=0;
-
-$sql = mysqli_query($link, 'SELECT * FROM application');
-$number=1;
-while ($result = mysqli_fetch_array($sql)) { echo "<div class='container mb-1 mt-1' id='for'>";
-    echo " Информация по $number-му пользователю: ";
-    echo " <p> Айди: "; echo "<strong>"; echo  $result['id']; echo "</strong>";
-    echo " <p> Имя: "; echo "<strong>"; echo  $result['name']; echo "</strong>";
-    echo " <p> Почтовый адрес: ";echo "<strong>"; echo  $result['mail']; echo "</strong>";
-    echo " <p> Год рождения: "; echo "<strong>"; echo  $result['year']; echo "</strong>";
-    
-    echo " <p> Выбранные способности: "; 
-    $num=0;
-    $pos = strpos($result['abilities'], "Levitation"); 
-    if ($pos!==false){echo "<strong>"; echo  "Левитация"; echo "</strong>"; $num=$num+1;}
-    $pos1 = strpos($result['abilities'], "Walls");
-    if ($pos1!==false){if ($num==0){echo "<strong>";  echo  "Умение ходить сквозь стены "; echo "</strong>";} else {echo "<strong>"; echo ", Умение ходить сквозь стены";echo "</strong>";} $num=$num+1; }
-    $pos2 = strpos($result['abilities'], "Immortal");
-    if ($pos2!==false){if ($num==0){ echo "<strong>"; echo  "Бессмертие"; echo "</strong>";} else{ echo "<strong>"; echo ", Бессмертие"; echo "</strong>";} $num=$num+1; }
-    
-    echo " <p> Количество конечностей: "; echo "<strong>"; echo  $result['limps']; echo "</strong>";
-    echo " <p> Пол: "; echo "<strong>"; echo  $result['sex']; echo "</strong>";
-    echo "<p> Биография: "; echo "<strong >"; echo  $result['bio'];echo "</strong>";
-    echo "<p> С условиями согласен: "; if ($result['checked']=='T'){echo "<strong>"; echo "Согласен";echo "</strong>";} else{ echo "<strong>"; echo "Не согласен!"; echo "</strong>";}
-    echo "<p> Логин: ";echo "<strong>"; echo  $result['login']; echo "</strong>";
-    echo "<p> Пароль: ";echo "<strong>"; echo  $result['pass']; echo "</strong>"; $number=$number+1; 
-    $id=$result['id'];;
-    $part="pple";
-    $link="http://u41029.kubsu-dev.ru/backend_web/6/del.php?id=$id";
-    $del=$result['id'];
-    echo "<p> <a href=$link> <button> Удалить пользователя из базы данных </button> </a>";
-    
-    echo "</div>";
+$result = $db->query("SELECT login FROM admin");
+foreach($result as $r)
+{
+  $login = $r['login'];
 }
+
+$result = $db->query("SELECT pass FROM admin");
+foreach($result as $r)
+{
+  $pass = $r['pass'];
+}
+
+if ($_SERVER['REQUEST_METHOD'] == 'GET')
+{
+  $messages = array();
+  $errors = array();
+  $errors['error'] = !empty($_COOKIE['id_error']);
+  if ($errors['error'])
+  {
+    setcookie('id_error','',100000);
+    $messages[]='<div class="error">id удаляемого = id редактированного или они пустые!!!</div>'; 
+  }
+  
+  if (empty($_SERVER['PHP_AUTH_USER']) ||
+    empty($_SERVER['PHP_AUTH_PW']) ||
+    $_SERVER['PHP_AUTH_USER'] != $login ||
+    $_SERVER['PHP_AUTH_PW'] != $pass)
+    {
+      header('HTTP/1.1 401 Unanthorized');
+      header('WWW-Authenticate: Basic realm="My site"');
+      print('<h1>401 Требуется авторизация</h1>');
+      exit();
+    }
+
+  print('Вы успешно авторизовались и видите защищенные паролем данные.');
+
+  $result = $db->query("SELECT * FROM person");  
+  $draw = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=1");
+  $sing = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=2");
+  $trouble = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=3");
+  $find = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=4");
+  ?>
+  <style>
+.error {
+      border: 2px solid red;
+    }
+    </style>
+    <?php
+      if (!empty($messages)) {
+        print('<div id="messages">');
+        // Выводим все сообщения.
+        foreach ($messages as $message) {
+          print($message);
+        }
+        print('</div>');
+    }
+    ?>
+    <table border="2">
+      <tr>
+        <th>id</th>
+        <th>Имя</th>
+        <th>email</th>
+        <th>Дата рождения</th>
+        <th>Пол</th>
+        <th>IQ</th>
+        <th>О пользователе</th>
+      </tr>
+      <?php foreach($result as $r) 
+        { ?>
+      <tr>
+        <td><?php print $r['id'];?></td>
+        <td><?php print $r['name'];?></td>
+        <td><?php print $r['email'];?></td>
+        <td><?php print $r['birth'];?></td>
+        <td><?php print $r['gender'];?></td>
+        <td><?php print $r['iq'];?></td>
+        <td><?php print $r['comment'];?></td>
+      </tr>
+      <?php } ?>
+    </table>
+    <table border="2">
+          <tr>
+            <th>Рисование</th>
+            <th>Пение</th>
+            <th>Попадание в неприятности</th>
+            <th>Нахождение второго носка</th>
+          </tr>
+          <tr>
+            <td>
+              <?php foreach($draw as $dr) {print($dr['count(*)']);} ?>
+            </td>
+            <td>
+              <?php foreach($sing as $dr) {print($dr['count(*)']);} ?>
+            </td>
+            <td>
+              <?php foreach($trouble as $dr) {print($dr['count(*)']);} ?>
+            </td>
+            <td>
+              <?php foreach($find as $dr) {print($dr['count(*)']);} ?>
+            </td>
+          </tr>
+    </table>
+    </br>
+    <form action="" method="POST">
+          <label>
+            Редактирование </br>
+            <input name="id1" />
+          </label>
+          </br>
+          <label>
+            Удаление </br>
+            <input name="id2" />
+          </label>
+          <input type="submit" value="Подтвредить" />
+    </form>
+
+    <?php 
+
+}
+else
+{
+  $errors = false;
+  if ($_POST['id1']==$_POST['id2'])
+  {
+    setcookie('id_error','1', time() + 24*60*60);
+    $errors = true;
+  }
+  if($errors){
+    header('Location: admin.php');
+    exit();
+  }
+  else{
+    setcookie('id_error','',100000);
+  }
+
+  if (!empty($_POST['id2']))
+  {
+    $id = (int) $_POST['id2'];
+    $db->query("DELETE FROM person_talents WHERE id_person=$id");
+    $db->query("DELETE FROM logpass WHERE id=$id");
+    $db->query("DELETE FROM person WHERE id=$id");
+    header('Location: admin.php');
+  }
+
+  if (!empty($_POST['id1']))
+  {
+    session_start();
+    $_SESSION['uid'] = (int) $_POST['id1'];
+    $_SESSION['login'] = 'lala';
+    header('Location: ./');
+  }
+  
+}
+
+
+
 
 // *********
 // Здесь нужно прочитать отправленные ранее пользователями данные и вывести в таблицу.
