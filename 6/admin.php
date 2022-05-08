@@ -94,7 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
     </table>
     <table border="2">
           <tr>
-            <th>id</th>
             <th>Рисование</th>
             <th>Пение</th>
             <th>Попадание в неприятности</th>
