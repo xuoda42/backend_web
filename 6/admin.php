@@ -102,9 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
           </tr>
           <tr>
             <td>
-              <?php foreach($result as $r) {print $r['id_person'];} ?>  
-            </td>
-            <td>
               <?php foreach($draw as $dr) {print($dr['count(*)']);} ?>
             </td>
             <td>
