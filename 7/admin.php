@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
       <?php foreach($result as $r) 
         { ?>
       <tr>
-        <td><?php print $r['id'];?></td>
+        <td><?php print $r['id_person'];?></td>
         <td><?php print $r['name'];?></td>
         <td><?php print $r['email'];?></td>
         <td><?php print $r['birth'];?></td>

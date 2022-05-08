@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $pass = '3452334';
     $db = new PDO('mysql:host=localhost;dbname=u41029', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
     $uid = $_SESSION['uid'];
-    $result = $db->query("SELECT name, email, birth, gender, iq, comment FROM person WHERE id=$uid");
+    $result = $db->query("SELECT name, email, birth, gender, iq, comment FROM person WHERE id_person=$uid");
     foreach ($result as $x)
     {
       //Санитизация
@@ -244,7 +244,7 @@ else {
     // TODO: тут необходимо удалить остальные Cookies.
   }
 
-  $user = 'u411029';
+  $user = 'u41029';
   $pass = '3452334';
   $db = new PDO('mysql:host=localhost;dbname=u41029', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
 
@@ -253,7 +253,7 @@ else {
     // TODO: перезаписать данные в БД новыми данными,
     // кроме логина и пароля.
     $uid = $_SESSION['uid'];
-    $stmt = $db->prepare("UPDATE person SET name=?, email=?, birth=?, gender=?, iq=?, comment=? WHERE id=$uid");
+    $stmt = $db->prepare("UPDATE person SET name=?, email=?, birth=?, gender=?, iq=?, comment=? WHERE id_person=$uid");
     $stmt -> execute([$_POST['field-name-1'],$_POST['field-email'],$_POST['field-date'],
     $_POST['radio-group-1'],$_POST['radio-group-iq'],$_POST['field-name-4']]);
     $db->query("DELETE FROM person_talents WHERE id_person=$uid");
