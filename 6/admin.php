@@ -100,10 +100,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
             <th>Попадание в неприятности</th>
             <th>Нахождение второго носка</th>
           </tr>
-          <?php foreach($result as $r) 
-          { ?>
           <tr>
-            <td><?php print $r['id_person'];?></td>
+            <td>
+              <?php foreach($result as $r) {print($r['id_person']);} ?>  
+            </td>
             <td>
               <?php foreach($draw as $dr) {print($dr['count(*)']);} ?>
             </td>
@@ -117,7 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
               <?php foreach($find as $dr) {print($dr['count(*)']);} ?>
             </td>
           </tr>
-          <?php } ?>
     </table>
     </br>
     <form action="" method="POST">
