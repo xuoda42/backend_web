@@ -101,16 +101,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
           </tr>
           <tr>
             <td>
-              <?php foreach($draw as $dr) {print($dr['count(*)']);} ?>
+              <?php foreach($draw as $dr) {print($dr['id_telent']);} ?>
             </td>
             <td>
-              <?php foreach($sing as $dr) {print($dr['count(*)']);} ?>
+              <?php foreach($sing as $dr) {print($dr['id_telent']);} ?>
             </td>
             <td>
-              <?php foreach($trouble as $dr) {print($dr['count(*)']);} ?>
+              <?php foreach($trouble as $dr) {print($dr['id_telent']);} ?>
             </td>
             <td>
-              <?php foreach($find as $dr) {print($dr['count(*)']);} ?>
+              <?php foreach($find as $dr) {print($dr['id_telent']);} ?>
             </td>
           </tr>
     </table>
