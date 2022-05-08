@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
 
   print('Вы успешно авторизовались и видите защищенные паролем данные.');
 
-  $result = $db->query("SELECT * FROM person");  
+  $result = $db->query("SELECT * FROM person"); 
   $draw = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=1");
   $sing = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=2");
   $trouble = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=3");
@@ -101,16 +101,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
           </tr>
           <tr>
             <td>
-              <?php foreach($draw as $dr) {print($dr['id_talent']);} ?>
+              <?php foreach($draw as $dr) {print($dr['count(*)']);} ?>
             </td>
             <td>
-              <?php foreach($sing as $dr) {print($dr['id_talent']);} ?>
+              <?php foreach($sing as $dr) {print($dr['count(*)']);} ?>
             </td>
             <td>
-              <?php foreach($trouble as $dr) {print($dr['id_talent']);} ?>
+              <?php foreach($trouble as $dr) {print($dr['count(*)']);} ?>
             </td>
             <td>
-              <?php foreach($find as $dr) {print($dr['id_talent']);} ?>
+              <?php foreach($find as $dr) {print($dr['count(*)']);} ?>
             </td>
           </tr>
     </table>
