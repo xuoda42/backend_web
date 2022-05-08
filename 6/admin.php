@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
   if (empty($_SERVER['PHP_AUTH_USER']) ||
     empty($_SERVER['PHP_AUTH_PW']) ||
     $_SERVER['PHP_AUTH_USER'] != $login ||
-    $_SERVER['PHP_AUTH_PW'] != $pass) // Вот здесь вот
+    $_SERVER['PHP_AUTH_PW'] != $pass) 
     {
       header('HTTP/1.1 401 Unanthorized');
       header('WWW-Authenticate: Basic realm="My site"');
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET')
       <?php foreach($result as $r) 
         { ?>
       <tr>
-        <td><?php print $r['id'];?></td>
+        <td><?php print $r['id_person'];?></td>
         <td><?php print $r['name'];?></td>
         <td><?php print $r['email'];?></td>
         <td><?php print $r['birth'];?></td>
