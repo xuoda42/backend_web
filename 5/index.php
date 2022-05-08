@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $pass = '3452334';
     $db = new PDO('mysql:host=localhost;dbname=u41029', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
     $uid = $_SESSION['uid'];
-    $result = $db->query("SELECT * FROM person WHERE id=$uid");
+    $result = $db->query("SELECT * FROM person WHERE id_person=$uid");
     foreach($result as $x)
     {
       //Санитизация
