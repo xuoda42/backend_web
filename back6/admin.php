@@ -31,7 +31,7 @@
   $stmtCheck = $db->prepare('SELECT admin_pass_hash FROM admin_login_data WHERE admin_login = ?');
   $stmtCheck->execute([$login]);
   $row = $stmtCheck->fetch(PDO::FETCH_ASSOC);
-  if ($row == false || $row['admin_pass_hash'] != md5($_SERVER['PHP_AUTH_PW'])) {
+  if ($row == false || $row['admin_pass_hash'] != $pass_hash) {
     header('HTTP/1.1 401 Unanthorized');
     header('WWW-Authenticate: Basic realm="Invalid login or password"');
     print('<h1>401 Неверный логин или пароль</h1>');
