@@ -17,7 +17,7 @@ $defaultValues = [
   'birthday' => '',
   'gender' => 'O',
   'limbs' => '4',
-  'biography' => 'Все началось когда я родился...',
+  'biography' => 'Все началось...',
   'contract' => ''
 ];
 
