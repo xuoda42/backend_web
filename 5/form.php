@@ -6,7 +6,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Poppins:wght@500&display=swap" rel="stylesheet"> 
 
-  <title>Задание 6</title>
+  <title>Задание 5</title>
 </head>
 <body>
   <nav>
@@ -18,7 +18,6 @@
           print('<a href="./?quit=1" title = "Выйти">Выйти</a>');
         else {
           print('<a href="login.php" title = "Войти">Войти</a>');
-          print('<a href="admin.php" title = "Администрирование"> Администрирование</a>');
         }
         ?>
       </li>
