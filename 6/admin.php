@@ -1,175 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Poppins:wght@500&display=swap" rel="stylesheet"> 
+
+  <title>Задание 6</title>
+</head>
+<body>
+  <div class="main">
 <?php
-
-/**
- * Задача 6. Реализовать вход администратора с использованием
- * HTTP-авторизации для просмотра и удаления результатов.
- **/
-
-// Пример HTTP-аутентификации.
-// PHP хранит логин и пароль в суперглобальном массиве $_SERVER.
-// Подробнее см. стр. 26 и 99 в учебном пособии Веб-программирование и веб-сервисы.
-$user = 'u41029';
-$pass = '3452334';
-$db = new PDO('mysql:host=localhost;dbname=u41029', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
-
-$result = $db->query("SELECT login FROM admin");
-foreach($result as $r)
-{
-  $login = $r['login'];
-}
-
-$result = $db->query("SELECT pass FROM admin");
-foreach($result as $r)
-{
-  $pass = $r['pass'];
-}
-
-if ($_SERVER['REQUEST_METHOD'] == 'GET')
-{
-  $messages = array();
-  $errors = array();
-  $errors['error'] = !empty($_COOKIE['id_error']);
-  if ($errors['error'])
-  {
-    setcookie('id_error','',100000);
-    $messages[]='<div class="error">id удаляемого = id редактированного или они пустые!!!</div>'; 
-  }
-  
   if (empty($_SERVER['PHP_AUTH_USER']) ||
-    empty($_SERVER['PHP_AUTH_PW']) ||
-    $_SERVER['PHP_AUTH_USER'] != $login ||
-    md5($_SERVER['PHP_AUTH_PW']) != $pass)
-    {
-      header('HTTP/1.1 401 Unanthorized');
-      header('WWW-Authenticate: Basic realm="My site"');
-      print('<h1>401 Требуется авторизация</h1>');
-      exit();
-    }
-
-  print('Вы успешно авторизовались и видите защищенные паролем данные.');
-
-  $result = $db->query("SELECT * FROM person"); 
-  $draw = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=1");
-  $sing = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=2");
-  $trouble = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=3");
-  $find = $db->query("SELECT count(*) FROM person_talents WHERE id_talent=4");
-  ?>
-  <style>
-.error {
-      border: 2px solid red;
-    }
-    </style>
-    <?php
-      if (!empty($messages)) {
-        print('<div id="messages">');
-        // Выводим все сообщения.
-        foreach ($messages as $message) {
-          print($message);
-        }
-        print('</div>');
-    }
-    ?>
-    <table border="2">
-      <tr>
-        <th>id</th>
-        <th>Имя</th>
-        <th>email</th>
-        <th>Дата рождения</th>
-        <th>Пол</th>
-        <th>IQ</th>
-        <th>О пользователе</th>
-      </tr>
-      <?php foreach($result as $r) 
-        { ?>
-      <tr>
-        <td><?php print $r['id_person'];?></td>
-        <td><?php print $r['name'];?></td>
-        <td><?php print $r['email'];?></td>
-        <td><?php print $r['birth'];?></td>
-        <td><?php print $r['gender'];?></td>
-        <td><?php print $r['iq'];?></td>
-        <td><?php print $r['comment'];?></td>
-      </tr>
-      <?php } ?>
-    </table>
-    <table border="2">
-          <tr>
-            <th>Рисование</th>
-            <th>Пение</th>
-            <th>Попадание в неприятности</th>
-            <th>Нахождение второго носка</th>
-          </tr>
-          <tr>
-            <td>
-              <?php foreach($draw as $dr) {print($dr['count(*)']);} ?>
-            </td>
-            <td>
-              <?php foreach($sing as $dr) {print($dr['count(*)']);} ?>
-            </td>
-            <td>
-              <?php foreach($trouble as $dr) {print($dr['count(*)']);} ?>
-            </td>
-            <td>
-              <?php foreach($find as $dr) {print($dr['count(*)']);} ?>
-            </td>
-          </tr>
-    </table>
-    </br>
-    <form action="" method="POST">
-          <label>
-            Редактирование </br>
-            <input name="id1" />
-          </label>
-          </br>
-          <label>
-            Удаление </br>
-            <input name="id2" />
-          </label>
-          <input type="submit" value="Подтвредить" />
-    </form>
-
-    <?php 
-
-}
-else
-{
-  $errors = false;
-  if ($_POST['id1']==$_POST['id2'])
-  {
-    setcookie('id_error','1', time() + 24*60*60);
-    $errors = true;
+    empty($_SERVER['PHP_AUTH_PW']) || 
+    !empty($_GET['logout'])) {
+    header('HTTP/1.1 401 Unanthorized');
+    header('WWW-Authenticate: Basic realm="Enter login and password"');
+    if (!empty($_GET['logout']))
+      header('Location: admin.php');
+    print('<h1>401 Требуется авторизация</h1></div></body>');
+    exit();
   }
-  if($errors){
+
+  $user = 'u41029';
+  $pass = '3452334';
+  $db = new PDO('mysql:host=localhost;dbname=u41029', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
+  
+  $login = trim($_SERVER['PHP_AUTH_USER']);
+  $pass_hash = substr(hash("sha256", trim($_SERVER['PHP_AUTH_PW'])), 0, 20);
+  $stmtCheck = $db->prepare('SELECT admin_pass_hash FROM admin_login_data WHERE admin_login = ?');
+  $stmtCheck->execute([$login]);
+  $row = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+  if ($row == false || $row['admin_pass_hash'] != $pass_hash) {
+    header('HTTP/1.1 401 Unanthorized');
+    header('WWW-Authenticate: Basic realm="Invalid login or password"');
+    print('<h1>401 Неверный логин или пароль</h1>');
+    exit();
+  }
+?>
+    <section>
+        <h2>Администрирование</h2>
+        <a href="login.php">Выйти</a>
+    </section>
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+  // пароль qwerty
+  
+  $stmtCount = $db->prepare('SELECT ability_name, count(ab.form_id) AS amount FROM abilities_name AS am LEFT JOIN ability AS ab ON am.ability_id = ab.ability_id GROUP BY am.ability_id');
+  $stmtCount->execute();
+  print('<section>');
+  while($row = $stmtCount->fetch(PDO::FETCH_ASSOC)) {
+      print('<b>' . $row['ability_name'] . '</b>: ' . $row['amount'] . '<br/>');
+  }
+  print('</section>');
+
+  $stmt1 = $db->prepare('SELECT form_id, name, email, birthday, sex, limbs, bio, login FROM forms');
+  $stmt2 = $db->prepare('SELECT ability_id FROM ability WHERE form_id = ?');
+  $stmt1->execute();
+
+  while($row = $stmt1->fetch(PDO::FETCH_ASSOC)) {
+      print('<section>');
+      print('<h2>' . $row['login'] . '</h2>');
+      $superpowers = [false, false, false];
+      $stmt2->execute([$row['form_id']]);
+      while ($superrow = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+          $superpowers[$superrow['ability_id']] = true;
+      }
+      foreach ($row as $key => $value)
+        if (is_string($value))
+          $row[$key] = strip_tags($value);
+      include('adminform.php');
+      print('</section>');
+  }
+} else {
+  if (array_key_exists('delete', $_POST)) {
+    $user = 'u41029';
+    $pass = '3452334';
+    $db = new PDO('mysql:host=localhost;dbname=u41029', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
+    $stmt1 = $db->prepare('DELETE FROM ability WHERE form_id = ?');
+    $stmt1->execute([$_POST['uid']]);
+    $stmt2 = $db->prepare('DELETE FROM forms WHERE form_id = ?');
+    $stmt2->execute([$_POST['uid']]);
     header('Location: admin.php');
     exit();
   }
-  else{
-    setcookie('id_error','',100000);
-  }
 
-  if (!empty($_POST['id2']))
-  {
-    $id = (int) $_POST['id2'];
-    $db->query("DELETE FROM person_talents WHERE id_person=$id");
-    $db->query("DELETE FROM logpass WHERE id=$id");
-    $db->query("DELETE FROM person WHERE id=$id");
-    header('Location: admin.php');
-  }
+  $trimmedPost = [];
+  foreach ($_POST as $key => $value)
+    if (is_string($value))
+      $trimmedPost[$key] = trim($value);
+    else
+      $trimmedPost[$key] = $value;
 
-  if (!empty($_POST['id1']))
-  {
-    session_start();
-    $_SESSION['uid'] = (int) $_POST['id1'];
-    $_SESSION['login'] = 'lala';
-    header('Location: ./');
+  if (empty($trimmedPost['name'])) {
+    $hasErrors = TRUE;
   }
+  $values['name'] = strip_tags($trimmedPost['name']);
+
+  if (!preg_match('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/', $trimmedPost['email'])) {
+    $hasErrors = TRUE;
+  }
+  $values['email'] = strip_tags($trimmedPost['email']);
+
+  if (!preg_match('/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $trimmedPost['birthday'])) {
+    $hasErrors = TRUE;
+  }
+  $values['birthday'] = strip_tags($trimmedPost['birthday']);
+
+  if (!preg_match('/^[MFO]$/', $trimmedPost['gender'])) {
+    $hasErrors = TRUE;
+  }
+  $values['gender'] = strip_tags($trimmedPost['gender']);
+
+  if (!preg_match('/^[0-5]$/', $trimmedPost['limbs'])) {
+    $hasErrors = TRUE;
+  }
+  $values['limbs'] = strip_tags($trimmedPost['limbs']);
+
+  foreach (['0', '1', '2'] as $value) {
+    $values['superpowers'][$value] = FALSE;
+  }
+  if (array_key_exists('superpowers', $trimmedPost)) {
+    foreach ($trimmedPost['superpowers'] as $value) {
+      if (!preg_match('/[0-2]/', $value)) {
+        $hasErrors = TRUE;
+      }
+      $values['superpowers'][$value] = TRUE;
+    }
+  }
+  $values['biography'] = strip_tags($trimmedPost['biography']);
   
+
+  if ($hasErrors) {
+    // При наличии ошибок перезагружаем страницу и завершаем работу скрипта.
+    header('Location: admin.php');
+    exit();
+  }
+
+  $user = 'u41029';
+  $pass = '3452334';
+  $db = new PDO('mysql:host=localhost;dbname=u41029', $user, $pass, array(PDO::ATTR_PERSISTENT => true));
+  $stmt1 = $db->prepare('UPDATE forms SET name=?, email=?, birthday=?, sex=?, limbs=?, bio=? WHERE form_id = ?');
+  $stmt1->execute([$values['name'], $values['email'], $values['birthday'], $values['gender'], $values['limbs'], $values['biography'], $_POST['uid']]);
+
+  $stmt2 = $db->prepare('DELETE FROM ability WHERE form_id = ?');
+  $stmt2->execute([$_POST['uid']]);
+
+  $stmt3 = $db->prepare("INSERT INTO ability SET form_id = ?, ability_id = ?");
+  foreach ($trimmedPost['superpowers'] as $s)
+    $stmt3 -> execute([$_POST['uid'], $s]);
+
+  header('Location: admin.php');
+  exit();
 }
 
-
-
-
-// *********
-// Здесь нужно прочитать отправленные ранее пользователями данные и вывести в таблицу.
-// Реализовать просмотр и удаление всех данных.
-// *********
+?>
+</div>
+</body>
