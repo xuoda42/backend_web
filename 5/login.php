@@ -6,7 +6,7 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Poppins:wght@500&display=swap" rel="stylesheet"> 
 
-  <title>Задание 6</title>
+  <title>Задание 5</title>
 </head>
 <body>
   <nav>
