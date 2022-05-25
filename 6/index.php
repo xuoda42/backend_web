@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     }
   }
 
-  // Складываем признак ошибок в массив.
+  // Складываем признак ошибок в массив
   $errors = array();
   foreach (['name', 'email', 'birthday', 'contract'] as $key) {
     $errors[$key] = !empty($_COOKIE[$key . '_error']);
